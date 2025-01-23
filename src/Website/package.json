@@ -1,0 +1,26 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "A Website containing a frontend, backend and a database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrachselRobin/HCD_Fanshop.git"
+  },
+  "keywords": [
+    "Fanshop",
+    "Webshop"
+  ],
+  "author": "Robin Trachsel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TrachselRobin/HCD_Fanshop/issues"
+  },
+  "homepage": "https://github.com/TrachselRobin/HCD_Fanshop#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
