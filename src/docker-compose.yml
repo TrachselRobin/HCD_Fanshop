@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  database:
+    build:
+      context: ./Database
+    container_name: database
+    networks:
+      - app-network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./Backend
+    container_name: backend
+    networks:
+      - app-network
+    depends_on:
+      - database
+    environment:
+      DB_HOST: database
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: frontend
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:

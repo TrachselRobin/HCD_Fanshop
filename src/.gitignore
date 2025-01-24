@@ -1,0 +1,9 @@
+# Node.js
+Backend/node_modules/
+Backend/.env
+
+# Datenbank-Volumes (falls generiert)
+Database/*.sql
+
+# Docker Compose spezifische Dateien
+*.env
