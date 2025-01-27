@@ -1,5 +1,6 @@
-FROM nginx:latest
+FROM nginx:alpine
 
-COPY . /usr/share/nginx/html
+COPY index.html /usr/share/nginx/html/
+COPY script /usr/share/nginx/html/script/
 
-EXPOSE 80
+EXPOSE ${FRONTEND_PORT}
