@@ -29,40 +29,26 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/', async (req, res) => {
-  const sql = 'SELECT * FROM test;';
+  const table_name = "test";
+  const sql = 'CALL SelectAllFromTable(?);';
 
-  const result = await sqlQuery(sql)
-
-  res.send(result)
+  connection().query(sql, [table_name], (error, results) => {
+    if (error) {
+      return res.status(500).send("Datenbankfehler")
+    }
+    res.json(results[0])
+  });
 });
 
 app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);
 });
 
-async function sqlQuery(sql) {
-  return new Promise((resolve, reject) => {
-    const connection = mysql.createConnection({
-      host: process.env.MYSQL_HOST || "localhost",
-      user: "root",
-      database: process.env.MYSQL_DATABASE || "mydb",
-      password: process.env.MYSQL_PASSWORD || "test"
-    });
-
-    connection.connect((err) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      connection.query(sql, (error, results, fields) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(results);
-        }
-        connection.end();
-      });
-    });
+function connection() {
+  return mysql.createConnection({
+    host: process.env.MYSQL_HOST || "localhost",
+    user: "root",
+    database: process.env.MYSQL_DATABASE || "mydb",
+    password: process.env.MYSQL_PASSWORD || "test"
   });
 }
