@@ -1,4 +1,4 @@
-const backendUrl = 'http://localhost:3000'; // Die URL des Backends in Docker Compose
+const backendUrl = 'http://13.53.127.208:3000'; // Die URL des Backends in Docker Compose
 
 fetch(`${backendUrl}/`)
     .then((response) => response.json())

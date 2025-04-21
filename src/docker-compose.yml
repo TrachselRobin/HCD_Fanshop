@@ -1,38 +1,6 @@
 version: "3.8"
 
 services:
-  frontend:
-    build:
-      context: ./Frontend
-      dockerfile: Dockerfile
-    ports:
-      - "${FRONTEND_PORT}:80"
-    environment:
-      - FRONTEND_PORT=${FRONTEND_PORT}
-    volumes:
-      - ./Frontend:/usr/share/nginx/html
-    depends_on:
-      - backend
-
-  backend:
-    build:
-      context: ./Backend
-      dockerfile: Dockerfile
-    ports:
-      - "${BACKEND_PORT}:${BACKEND_PORT}"
-    environment:
-      - BACKEND_PORT=${BACKEND_PORT}
-      - MYSQL_HOST=database
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-    volumes:
-      - ./Backend:/app
-      - /app/node_modules
-    depends_on:
-      database:
-        condition: service_healthy
-    restart: always
-
   database:
     build:
       context: ./Database
@@ -47,3 +15,35 @@ services:
       retries: 3
     volumes:
       - ./Database:/db
+
+  backend:
+      build:
+        context: ./Backend
+        dockerfile: Dockerfile
+      ports:
+        - "${BACKEND_PORT}:${BACKEND_PORT}"
+      environment:
+        - BACKEND_PORT=${BACKEND_PORT}
+        - MYSQL_HOST=database
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+      volumes:
+        - ./Backend:/app
+        - /app/node_modules
+      depends_on:
+        database:
+          condition: service_healthy
+      restart: always
+  
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:80"
+    environment:
+      - FRONTEND_PORT=${FRONTEND_PORT}
+    volumes:
+      - ./Frontend:/usr/share/nginx/html
+    depends_on:
+      - backend
