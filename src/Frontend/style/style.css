@@ -2,3 +2,12 @@
     margin: 0;
     padding: 0;
 }
+
+html {
+    background-image: url("../images/background.png");
+}
+
+img {
+    max-width: 50vw;
+    transform: scaleX(-1)
+}
