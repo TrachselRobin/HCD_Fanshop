@@ -1,4 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 footer {
     min-height: 25vh;
     background-color: gray;
+}
+
+img {
+    width: 3vw;
+    height: auto;
 }
