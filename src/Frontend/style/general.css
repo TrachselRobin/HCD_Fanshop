@@ -1,0 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: #FFFFFF;
+    --accent-primary-color: #094fbf;
+    --accent-secondary-color: #fde000;
+}
