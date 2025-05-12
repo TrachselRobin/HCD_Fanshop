@@ -11,8 +11,3 @@
     --accent-secondary-color: #fde000;
     --footer-background-color: #111111;
 }
-
-footer iframe {
-    width: 100vw;
-    height: fit-content;
-}
