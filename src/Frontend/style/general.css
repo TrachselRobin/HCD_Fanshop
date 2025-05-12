@@ -1,15 +1,18 @@
 * {
     margin: 0;
     padding: 0;
-    font: sans-serif;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
 }
 
 :root {
     --primary-color: #FFFFFF;
     --accent-primary-color: #094fbf;
     --accent-secondary-color: #fde000;
+    --footer-background-color: #111111;
 }
 
 footer iframe {
     width: 100vw;
+    height: fit-content;
 }

@@ -1,3 +1,78 @@
 main {
     min-height: 75vh;
 }
+
+/* title */
+#title {
+    height: 100vh;
+
+    position: relative;
+}
+
+#title .triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+}
+
+#title .triangle:nth-child(1) {
+    background-image: url("../images/triangle1.jpg");
+
+    clip-path: polygon(6.25% 100%, 43.75% 100%, 25% 33.33%);
+}
+
+#title .triangle:nth-child(2) {
+    background-image: url("../images/triangle2.jpg");
+
+    clip-path: polygon(21.875% 0, 65.625% 0, 43.75% 77.78%);
+}
+
+#title .triangle:nth-child(3) {
+    background-image: url("../images/triangle3.jpg");
+
+    clip-path: polygon(43.75% 100%, 62.5% 100%, 53.125% 66.67%);
+}
+
+#title-text {
+    position: absolute;
+    top: 40vh;
+    left: 60vw;
+
+    width: 25%;
+}
+
+#title-text h1 {
+    font-size: 6rem;
+    font-weight: bold;
+}
+
+#title-text h2 {
+    font-size: 2.25rem;
+    color: grey;
+    margin-top: 10px;
+}
+
+#title-text p {
+    margin-top: 20px;
+    color: #555;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+/* news */
+#news {
+    background-color: #111111;
+    color: white;
+    min-height: 80vh;
+    padding: 50px 0;
+}
+
+/* trending */
+#trending {
+    min-height: 80vh;
+    padding: 50px 0;
+}
