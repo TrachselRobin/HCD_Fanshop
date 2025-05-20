@@ -1,37 +1,33 @@
 /*
-  AUTHOR:  Robin Trachsel
-  VERSION: 1.0
-  DATE:    28.01.2025
-
-  DESCRIPTION: Dies ist das Grundgerüst des gesamten Backends
+  VERSION:              Robin Trachsel
+  DATE:                 19.04.2023
+  LEISTUNGSBEURTEILUNG: B
+  DESCRIPTION:          JS-Server for Haputanforderungen and Authentifizierung
 */
 
-// NodeJS modules
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config()
 
-// Specific modules
-const connection = require('./modules/createSqlConnection.js');
-const corsOptions = require('./modules/corsOptions.js');
+const express = require('express')
+const session = require('express-session')
 
-const app = express();
-const PORT = process.env.BACKEND_PORT || 3000;
 
-app.use(cors(corsOptions));
+const login = require('./modules/login')
+const test = require('./modules/test')
 
-app.get('/', async (req, res) => {
-  const table_name = "test";
-  const sql = 'CALL SelectAllFromTable(?);';
+const app = express()
+const port = 3000
 
-  connection.query(sql, [table_name], (error, results) => {
-    if (error) {
-      return res.status(500).send("Datenbankfehler")
-    }
-    res.json(results[0])
-  });
-});
+app.use(session({ secret: 'geheim', resave: false, saveUninitialized: true }))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
-app.listen(PORT, () => {
-  console.log(`Backend running at http://localhost:${PORT}`);
-});
+app.use('/tasks', login)
+app.use('/test', test)
+
+app.get('*', (req, res) => {
+    res.status(404).send({ error: 'Endpoint not found' })
+})
+
+app.listen(port, () => {
+    console.log(`Backend listening at http://localhost:${port}`)
+})
