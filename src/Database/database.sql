@@ -43,6 +43,20 @@ CREATE TABLE `product` (
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE `ticket` (
+    `ID` INT AUTO_INCREMENT, PRIMARY KEY (`ID`),
+    `name` VARCHAR(100),
+    `description` TEXT,
+    `date` DATE,
+    `time` TIME,
+    `price` DECIMAL(10,2),
+    `stock` INT,
+    `visible` BOOLEAN DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
 CREATE TABLE `category` (
     `ID` INT AUTO_INCREMENT, PRIMARY KEY (`ID`),
     `name` VARCHAR(50)
@@ -54,6 +68,9 @@ CREATE TABLE `order` (
     `addressDeliveryID` INT,
     `totalPrice` DECIMAL(10, 2),
     `status` ENUM('pending', 'shipped', 'delivered', 'cancelled'),
+    `isPickup` BOOLEAN DEFAULT 0,
+    `pickupCode` VARCHAR(255) UNIQUE,
+    `pickupConfirmed` BOOLEAN DEFAULT 0,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -65,6 +82,17 @@ CREATE TABLE `order_product` (
     `quantity` INT,
     `price` DECIMAL(10, 2),
     `discount` DECIMAL(10, 2),
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `order_ticket` (
+    `ID` INT AUTO_INCREMENT, PRIMARY KEY (`ID`),
+    `orderID` INT,
+    `ticketID` INT,
+    `quantity` INT,
+    `price` DECIMAL(10, 2),
+    `pickupCode` VARCHAR(255) UNIQUE,
+    `scanned` BOOLEAN DEFAULT 0,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
