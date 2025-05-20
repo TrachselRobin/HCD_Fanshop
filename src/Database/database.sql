@@ -132,14 +132,6 @@ BEGIN
     DEALLOCATE PREPARE stmt;
 END //
 
-CREATE PROCEDURE InsertIntoTable(IN tableName VARCHAR(255), IN columns VARCHAR(255), IN values VARCHAR(255))
-BEGIN
-    SET @query = CONCAT('INSERT INTO ', tableName, ' (', columns, ') VALUES (', values, ')');
-    PREPARE stmt FROM @query;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-END //
-
 CREATE PROCEDURE UpdateTableByID(IN tableName VARCHAR(255), IN id INT, IN columnsValues VARCHAR(255))
 BEGIN
     SET @query = CONCAT('UPDATE ', tableName, ' SET ', columnsValues, ' WHERE ID = ?');
@@ -183,3 +175,44 @@ INSERT INTO `category` (`name`) VALUES
 ('Zubehör'),
 ('Sonderangebote');
 
+INSERT INTO `address` (`street`, `houseNumber`, `postalCode`, `place`) VALUES
+('Musterstraße', '10', '8000', 'Zürich'),
+('Beispielweg', '5A', '3000', 'Bern'),
+('Hauptstraße', '23', '4000', 'Basel');
+
+INSERT INTO `product` (`name`, `description`, `price`, `discount`, `stock`, `categoryID`) VALUES
+('Fankappe', 'Schwarze Kappe mit Logo', 19.90, 0.00, 100, 1),
+('Trikot 2025', 'Offizielles Heimtrikot der Saison 2025', 79.90, 5.00, 50, 2),
+('Schal', 'Winter-Schal in Vereinsfarben', 24.90, 2.00, 80, 1);
+
+INSERT INTO `ticket` (`name`, `description`, `date`, `time`, `price`, `stock`) VALUES
+('Heimspiel gegen FC X', 'Saisonspiel', '2025-06-01', '18:00:00', 29.90, 200),
+('Auswärtsspiel bei FC Y', 'Reisespiel', '2025-06-10', '20:00:00', 24.90, 150);
+
+INSERT INTO `order` (`userID`, `addressDeliveryID`, `totalPrice`, `status`, `isPickup`, `pickupCode`, `pickupConfirmed`) VALUES
+(1, 1, 99.80, 'pending', 1, 'PICKUP123', 0),
+(1, 2, 59.90, 'shipped', 0, 'PICKUP456', 1);
+
+INSERT INTO `order_product` (`orderID`, `productID`, `quantity`, `price`, `discount`) VALUES
+(1, 1, 2, 19.90, 0.00),
+(1, 3, 1, 24.90, 2.00);
+
+INSERT INTO `order_ticket` (`orderID`, `ticketID`, `quantity`, `price`, `pickupCode`, `scanned`) VALUES
+(2, 1, 2, 29.90, 'TICKET001', 0),
+(2, 2, 1, 24.90, 'TICKET002', 1);
+
+INSERT INTO `image` (`productID`, `imagePath`, `isMain`) VALUES
+(1, '/images/kappe1.jpg', 1),
+(2, '/images/trikot1.jpg', 1),
+(3, '/images/schal1.jpg', 1);
+
+INSERT INTO `review` (`productID`, `userID`, `rating`, `comment`) VALUES
+(1, 1, 5, 'Top Qualität, passt perfekt!'),
+(2, 1, 4, 'Sehr gut, aber etwas teuer.'),
+(3, 1, 3, 'Okay, aber etwas zu dünn für den Winter.');
+
+INSERT INTO `user` (`surname`, `name`, `email`, `password`, `addressID`, `addressDeliveryID`, `roleID`, `member`) VALUES
+('Müller', 'Anna', 'anna.mueller@example.com', '$2a$12$pX1BEAEy7srV.k79I86GzO1kW1nEdYxWSeae4Hdn05xzv8N4hGXq2', 1, 2, 4, 1),
+('Schneider', 'Ben', 'ben.schneider@example.com', '$2a$12$pX1BEAEy7srV.k79I86GzO1kW1nEdYxWSeae4Hdn05xzv8N4hGXq2', 2, 3, 1, 1),
+('Weber', 'Clara', 'clara.weber@example.com', '$2a$12$pX1BEAEy7srV.k79I86GzO1kW1nEdYxWSeae4Hdn05xzv8N4hGXq2', 3, 1, 2, 0),
+('Keller', 'David', 'david.keller@example.com', '$2a$12$pX1BEAEy7srV.k79I86GzO1kW1nEdYxWSeae4Hdn05xzv8N4hGXq2', 1, 3, 3, 1);
